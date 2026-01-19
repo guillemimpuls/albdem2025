@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Albeirch - Resum Demolicions 2025</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #253669;
+            --accent-color: #f2b258;
+            --text-color: #253669;
+            --bg-color: #ffffff;
+            --light-gray: #f5f5f5;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header amb selector d'idioma */
+        header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a2548 100%);
+            color: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(37, 54, 105, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            padding: 8px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .lang-btn.active {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Secció intro amb vídeo */
+        .intro-section {
+            position: relative;
+            height: 600px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a2548 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .intro-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 900px;
+            padding: 40px;
+        }
+
+        .intro-content h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: slideInDown 0.8s ease-out;
+        }
+
+        .intro-content p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            animation: slideInUp 0.8s ease-out 0.2s both;
+        }
+
+        .year-badge {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.15;
+            object-fit: cover;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Secció estadístiques */
+        .stats-section {
+            padding: 80px 40px;
+            background-color: var(--light-gray);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            color: var(--primary-color);
+            margin-bottom: 50px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(37, 54, 105, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 25px rgba(37, 54, 105, 0.2);
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Secció de sectors */
+        .sectors-section {
+            padding: 80px 40px;
+            background-color: white;
+        }
+
+        .sectors-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .chart-wrapper {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(37, 54, 105, 0.1);
+        }
+
+        .sectors-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .sector-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--light-gray);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .sector-item:hover {
+            background-color: #f0f0f0;
+            transform: translateX(10px);
+        }
+
+        .sector-name {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .sector-count {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Secció de galeria d'imatges */
+        .gallery-section {
+            padding: 80px 40px;
+            background: linear-gradient(135deg, var(--light-gray) 0%, white 100%);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(37, 54, 105, 0.15);
+            transition: all 0.3s ease;
+            height: 300px;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(37, 54, 105, 0.25);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(37, 54, 105, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+
+        .gallery-overlay-text {
+            color: white;
+            font-size: 14px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .gallery-overlay-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* LIGHTBOX / MODE PRESENTACIÓ */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 85%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            animation: zoomIn 0.3s ease;
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .lightbox-close:hover {
+            transform: scale(1.1) rotate(90deg);
+            background: white;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .lightbox-nav:hover {
+            transform: translateY(-50%) scale(1.1);
+            background: white;
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            background: rgba(37, 54, 105, 0.8);
+            padding: 10px 25px;
+            border-radius: 25px;
+        }
+
+        .lightbox-autoplay {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .lightbox-autoplay:hover {
+            background: white;
+            transform: scale(1.05);
+        }
+
+        .lightbox-autoplay.playing {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .lightbox-thumbnails {
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            max-width: 80%;
+            overflow-x: auto;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        .lightbox-thumb {
+            width: 60px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 4px;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            flex-shrink: 0;
+        }
+
+        .lightbox-thumb:hover {
+            opacity: 0.8;
+        }
+
+        .lightbox-thumb.active {
+            opacity: 1;
+            border-color: var(--accent-color);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a2548 100%);
+            color: white;
+            text-align: center;
+            padding: 40px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .footer-text {
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .intro-section {
+                height: 400px;
+            }
+
+            .intro-content h1 {
+                font-size: 32px;
+            }
+
+            .intro-content p {
+                font-size: 16px;
+            }
+
+            .sectors-container {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .gallery-item {
+                height: 200px;
+            }
+
+            .lightbox-nav {
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+
+            .lightbox-prev {
+                left: 10px;
+            }
+
+            .lightbox-next {
+                right: 10px;
+            }
+
+            .lightbox-thumbnails {
+                display: none;
+            }
+
+            .lightbox-autoplay {
+                bottom: 70px;
+                right: 50%;
+                transform: translateX(50%);
+            }
+        }
+
+        /* Animacions de scroll */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Traducció */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo">ALBEIRCH</div>
+        <div class="language-selector">
+            <button class="lang-btn active" onclick="changeLanguage('ca')">Català</button>
+            <button class="lang-btn" onclick="changeLanguage('es')">Castellà</button>
+        </div>
+    </header>
+
+    <!-- Intro Section with Video -->
+    <section class="intro-section">
+        <video autoplay muted loop playsinline class="video-container">
+            <source src="https://vid.cdn-website.com/1854da07/videos/1MdosVBlSECcVzx6S8sZ_d046f428-63b2-43d8-ad82-1984834fb474.MP4-v.mp4" type="video/mp4">
+            <img src="https://irp.cdn-website.com/1854da07/dms3rep/multi/IMG-20250620-WA0003-fbfcc329.jpg" alt="Demolicions">
+        </video>
+        <div class="intro-content">
+            <div class="year-badge">2025</div>
+            <h1 id="intro-title">Resum de Demolicions</h1>
+            <p id="intro-subtitle">Un any de projectes extraordinaris i transformacions</p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <h2 class="section-title" id="stats-title">Estadístiques Generals</h2>
+        <div class="stats-grid">
+            <div class="stat-card fade-in">
+                <div class="stat-number">94</div>
+                <div class="stat-label" id="stat-projects">Projectes Executats</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-number">11</div>
+                <div class="stat-label" id="stat-sectors">Sectors Diferents</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sectors Section -->
+    <section class="sectors-section">
+        <h2 class="section-title" id="sectors-title">Distribució per Sectors</h2>
+        <div class="sectors-container">
+            <div class="chart-wrapper">
+                <canvas id="sectorsChart"></canvas>
+            </div>
+            <div class="sectors-list" id="sectorsList">
+                <!-- Sectors es carregaran dinàmicament -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <h2 class="section-title" id="gallery-title">Galeria de Projectes</h2>
+        <div class="gallery-grid" id="galleryGrid">
+            <!-- Images es carregaran dinàmicament -->
+        </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+        <button class="lightbox-nav lightbox-prev" onclick="changeSlide(-1)">❮</button>
+        <button class="lightbox-nav lightbox-next" onclick="changeSlide(1)">❯</button>
+        <div class="lightbox-content">
+            <img src="" alt="Imatge ampliada" class="lightbox-image" id="lightboxImage">
+        </div>
+        <div class="lightbox-counter" id="lightboxCounter">1 / 20</div>
+        <div class="lightbox-thumbnails" id="lightboxThumbnails">
+            <!-- Thumbnails es carregaran dinàmicament -->
+        </div>
+        <button class="lightbox-autoplay" id="autoplayBtn" onclick="toggleAutoplay()">
+            <span id="autoplayIcon">▶</span>
+            <span id="autoplayText">Presentació</span>
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">ALBEIRCH</div>
+            <p class="footer-text" id="footer-text">Especialistes en Demolicions i Transformacions</p>
+            <p class="footer-text" id="footer-year">© 2025 Albeirch. Tots els drets reservats.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dades de sectors
+        const sectorsData = {
+            ca: {
+                "Química": 11,
+                "Automoció": 9,
+                "Alimentació": 12,
+                "Tèxtil": 4,
+                "Construcció": 5,
+                "Instal·lacions i muntatges": 26,
+                "Ferroviari": 10,
+                "Energètic": 1,
+                "EDAR": 7,
+                "Sinistres": 1,
+                "Cantera": 8
+            },
+            es: {
+                "Química": 11,
+                "Automoción": 9,
+                "Alimentación": 12,
+                "Textil": 4,
+                "Construcción": 5,
+                "Instalaciones y montajes": 26,
+                "Ferroviario": 10,
+                "Energético": 1,
+                "EDAR": 7,
+                "Siniestros": 1,
+                "Cantera": 8
+            }
+        };
+
+        // Textos multiidioma
+        const translations = {
+            ca: {
+                'intro-title': 'Resum de Demolicions',
+                'intro-subtitle': 'Un any de projectes extraordinaris i transformacions',
+                'stats-title': 'Estadístiques Generals',
+                'stat-projects': 'Projectes Executats',
+                'stat-sectors': 'Sectors Diferents',
+                'stat-success': 'Satisfacció',
+                'sectors-title': 'Distribució per Sectors',
+                'gallery-title': 'Galeria de Projectes',
+                'footer-text': 'Especialistes en Demolicions i Transformacions',
+                'footer-year': '© 2025 Albeirch. Tots els drets reservats.',
+                'autoplay-start': 'Presentació',
+                'autoplay-stop': 'Aturar',
+                'click-expand': 'Fes clic per ampliar'
+            },
+            es: {
+                'intro-title': 'Resumen de Demoliciones',
+                'intro-subtitle': 'Un año de proyectos extraordinarios y transformaciones',
+                'stats-title': 'Estadísticas Generales',
+                'stat-projects': 'Proyectos Ejecutados',
+                'stat-sectors': 'Sectores Diferentes',
+                'stat-success': 'Satisfacción',
+                'sectors-title': 'Distribución por Sectores',
+                'gallery-title': 'Galería de Proyectos',
+                'footer-text': 'Especialistas en Demoliciones y Transformaciones',
+                'footer-year': '© 2025 Albeirch. Todos los derechos reservados.',
+                'autoplay-start': 'Presentación',
+                'autoplay-stop': 'Detener',
+                'click-expand': 'Haz clic para ampliar'
+            }
+        };
+
+        // Imatges de la galeria - URLs absolutes del CDN
+        const galleryImages = [
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/IMG-20250620-WA0003-fbfcc329.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/IMG-20250827-WA0022-fa311f76.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/RADOMO-c0f07931.jpeg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/SEAT+CENTRAL-c2049ab8.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/SEAT+CENTRAL1-ddfa317c.jpeg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/TAG-19343b4c.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/TAG1-96f448d5.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/TAG2-e60a4efb.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/TUNELADORA1-247cc33c.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/TUNELADORA-ec3f3e01.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/TUNELADORA2-f5400713.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/TUNELADORA3-4bcaa923.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/URSA-f91077ac.jpeg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/URSA-b38499be.jpg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/URSA1-9031ec5e.jpeg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/WhatsApp+Image+2026-01-18+at+22.47.18+%281%29-095c148b.jpeg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/URSA2-f7e5ccb2.jpeg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/WhatsApp+Image+2026-01-18+at+22.47.18+%282%29-e513c666.jpeg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/WhatsApp+Image+2026-01-18+at+22.47.18+%283%29-b8e8d21d.jpeg',
+            'https://irp.cdn-website.com/1854da07/dms3rep/multi/WhatsApp+Image+2026-01-18+at+22.47.18+%284%29-3ac5236a.jpeg'
+        ];
+
+        let currentLanguage = 'ca';
+        let sectorsChart = null;
+        let currentSlide = 0;
+        let autoplayInterval = null;
+        let isAutoplayActive = false;
+
+        // Canviar idioma
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Actualitzar botons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Actualitzar textos
+            Object.keys(translations[lang]).forEach(key => {
+                const element = document.getElementById(key);
+                if (element) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Actualitzar autoplay text
+            const autoplayText = document.getElementById('autoplayText');
+            if (autoplayText) {
+                autoplayText.textContent = isAutoplayActive ? 
+                    translations[lang]['autoplay-stop'] : 
+                    translations[lang]['autoplay-start'];
+            }
+
+            // Actualitzar sectors
+            renderSectors(lang);
+            updateChart(lang);
+        }
+
+        // Renderitzar sectors
+        function renderSectors(lang) {
+            const sectorsList = document.getElementById('sectorsList');
+            sectorsList.innerHTML = '';
+            
+            const sectors = sectorsData[lang];
+            Object.entries(sectors).forEach(([name, count]) => {
+                const item = document.createElement('div');
+                item.className = 'sector-item fade-in';
+                item.innerHTML = `
+                    <span class="sector-name">${name}</span>
+                    <span class="sector-count">${count}</span>
+                `;
+                sectorsList.appendChild(item);
+            });
+        }
+
+        // Actualitzar gràfic
+        function updateChart(lang) {
+            const sectors = sectorsData[lang];
+            const labels = Object.keys(sectors);
+            const data = Object.values(sectors);
+
+            const ctx = document.getElementById('sectorsChart').getContext('2d');
+            
+            if (sectorsChart) {
+                sectorsChart.destroy();
+            }
+
+            sectorsChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            '#253669',
+                            '#f2b258',
+                            '#4a6fa5',
+                            '#d4a574',
+                            '#2a4a7c',
+                            '#f5c88a',
+                            '#3d5a8c',
+                            '#e8b86b',
+                            '#1f3a5c',
+                            '#f0a840',
+                            '#5a7ab8'
+                        ],
+                        borderColor: '#ffffff',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                },
+                                color: '#253669',
+                                padding: 15
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Renderitzar galeria
+        function renderGallery() {
+            const gallery = document.getElementById('galleryGrid');
+            galleryImages.forEach((img, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item fade-in';
+                item.style.animationDelay = `${index * 0.1}s`;
+                item.onclick = () => openLightbox(index);
+                item.innerHTML = `
+                    <img src="${img}" alt="Projecte ${index + 1}" loading="lazy">
+                    <div class="gallery-overlay">
+                        <div class="gallery-overlay-text">
+                            <div class="gallery-overlay-icon">🔍</div>
+                            Projecte ${index + 1}
+                        </div>
+                    </div>
+                `;
+                gallery.appendChild(item);
+            });
+
+            // Renderitzar thumbnails del lightbox
+            renderThumbnails();
+        }
+
+        // Renderitzar thumbnails
+        function renderThumbnails() {
+            const thumbnailsContainer = document.getElementById('lightboxThumbnails');
+            galleryImages.forEach((img, index) => {
+                const thumb = document.createElement('img');
+                thumb.src = img;
+                thumb.className = 'lightbox-thumb';
+                thumb.onclick = () => goToSlide(index);
+                thumbnailsContainer.appendChild(thumb);
+            });
+        }
+
+        // FUNCIONS LIGHTBOX
+        function openLightbox(index) {
+            currentSlide = index;
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            updateLightboxImage();
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('lightbox');
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            stopAutoplay();
+        }
+
+        function changeSlide(direction) {
+            currentSlide += direction;
+            if (currentSlide >= galleryImages.length) {
+                currentSlide = 0;
+            } else if (currentSlide < 0) {
+                currentSlide = galleryImages.length - 1;
+            }
+            updateLightboxImage();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateLightboxImage();
+        }
+
+        function updateLightboxImage() {
+            const image = document.getElementById('lightboxImage');
+            const counter = document.getElementById('lightboxCounter');
+            
+            image.src = galleryImages[currentSlide];
+            counter.textContent = `${currentSlide + 1} / ${galleryImages.length}`;
+
+            // Actualitzar thumbnails actius
+            document.querySelectorAll('.lightbox-thumb').forEach((thumb, index) => {
+                thumb.classList.toggle('active', index === currentSlide);
+            });
+
+            // Scroll thumbnail actiu a la vista
+            const activeThumbnail = document.querySelectorAll('.lightbox-thumb')[currentSlide];
+            if (activeThumbnail) {
+                activeThumbnail.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
+
+        // Mode presentació automàtica
+        function toggleAutoplay() {
+            if (isAutoplayActive) {
+                stopAutoplay();
+            } else {
+                startAutoplay();
+            }
+        }
+
+        function startAutoplay() {
+            isAutoplayActive = true;
+            const btn = document.getElementById('autoplayBtn');
+            const icon = document.getElementById('autoplayIcon');
+            const text = document.getElementById('autoplayText');
+            
+            btn.classList.add('playing');
+            icon.textContent = '⏸';
+            text.textContent = translations[currentLanguage]['autoplay-stop'];
+
+            autoplayInterval = setInterval(() => {
+                changeSlide(1);
+            }, 3000); // Canvia cada 3 segons
+        }
+
+        function stopAutoplay() {
+            isAutoplayActive = false;
+            const btn = document.getElementById('autoplayBtn');
+            const icon = document.getElementById('autoplayIcon');
+            const text = document.getElementById('autoplayText');
+            
+            btn.classList.remove('playing');
+            icon.textContent = '▶';
+            text.textContent = translations[currentLanguage]['autoplay-start'];
+
+            if (autoplayInterval) {
+                clearInterval(autoplayInterval);
+                autoplayInterval = null;
+            }
+        }
+
+        // Controls de teclat
+        document.addEventListener('keydown', (e) => {
+            const lightbox = document.getElementById('lightbox');
+            if (!lightbox.classList.contains('active')) return;
+
+            switch(e.key) {
+                case 'ArrowLeft':
+                    changeSlide(-1);
+                    break;
+                case 'ArrowRight':
+                    changeSlide(1);
+                    break;
+                case 'Escape':
+                    closeLightbox();
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    toggleAutoplay();
+                    break;
+            }
+        });
+
+        // Tancar lightbox clicant fora de la imatge
+        document.getElementById('lightbox').addEventListener('click', (e) => {
+            if (e.target.id === 'lightbox') {
+                closeLightbox();
+            }
+        });
+
+        // Intersection Observer per animacions
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.8s ease-out forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Inicialització
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSectors('ca');
+            renderGallery();
+            updateChart('ca');
+
+            // Observer per elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
