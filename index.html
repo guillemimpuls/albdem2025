@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Albeirch - Resum Demolicions 2025</title>
+    <title>Alberich - Resum Demolicions 2025</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         * {
@@ -31,7 +31,7 @@
         header {
             background: linear-gradient(135deg, var(--primary-color) 0%, #1a2548 100%);
             color: white;
-            padding: 20px 40px;
+            padding: 15px 40px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -42,9 +42,8 @@
         }
 
         .logo {
-            font-size: 28px;
-            font-weight: bold;
-            letter-spacing: 2px;
+            height: 50px;
+            width: auto;
         }
 
         .language-selector {
@@ -261,7 +260,6 @@
             background: var(--light-gray);
             border-radius: 8px;
             transition: all 0.3s ease;
-            border-left: 4px solid var(--accent-color);
         }
 
         .sector-item:hover {
@@ -272,6 +270,16 @@
         .sector-name {
             font-weight: 600;
             color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sector-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            flex-shrink: 0;
         }
 
         .sector-count {
@@ -550,10 +558,8 @@
         }
 
         .footer-logo {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
+            height: 60px;
+            margin-bottom: 20px;
         }
 
         .footer-text {
@@ -647,7 +653,7 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="logo">ALBEIRCH</div>
+        <img src="https://lirp.cdn-website.com/1854da07/dms3rep/multi/opt/Alberich+Rediseny+Logo+a+Color+Blanc-1920w.png" alt="Alberich" class="logo">
         <div class="language-selector">
             <button class="lang-btn active" onclick="changeLanguage('ca')">Català</button>
             <button class="lang-btn" onclick="changeLanguage('es')">Castellà</button>
@@ -724,13 +730,28 @@
     <!-- Footer -->
     <footer>
         <div class="footer-content">
-            <div class="footer-logo">ALBEIRCH</div>
+            <img src="https://lirp.cdn-website.com/1854da07/dms3rep/multi/opt/Alberich+Rediseny+Logo+a+Color+Blanc-1920w.png" alt="Alberich" class="footer-logo">
             <p class="footer-text" id="footer-text">Especialistes en Demolicions i Transformacions</p>
-            <p class="footer-text" id="footer-year">© 2025 Albeirch. Tots els drets reservats.</p>
+            <p class="footer-text" id="footer-year">© 2025 Alberich. Tots els drets reservats.</p>
         </div>
     </footer>
 
     <script>
+        // Colors per cada sector - ben diferenciats i visuals
+        const sectorColors = [
+            '#E63946', // Vermell intens - Química
+            '#F4A261', // Taronja càlid - Automoció
+            '#2A9D8F', // Verd turquesa - Alimentació
+            '#9B5DE5', // Lila vibrant - Tèxtil
+            '#F72585', // Rosa fucsia - Construcció
+            '#4361EE', // Blau elèctric - Instal·lacions
+            '#4CC9F0', // Blau cel - Ferroviari
+            '#80B918', // Verd llima - Energètic
+            '#FF6B35', // Taronja fosc - EDAR
+            '#7209B7', // Porpra - Sinistres
+            '#3A86FF'  // Blau brillant - Cantera
+        ];
+
         // Dades de sectors
         const sectorsData = {
             ca: {
@@ -773,7 +794,7 @@
                 'sectors-title': 'Distribució per Sectors',
                 'gallery-title': 'Galeria de Projectes',
                 'footer-text': 'Especialistes en Demolicions i Transformacions',
-                'footer-year': '© 2025 Albeirch. Tots els drets reservats.',
+                'footer-year': '© 2025 Alberich. Tots els drets reservats.',
                 'autoplay-start': 'Presentació',
                 'autoplay-stop': 'Aturar',
                 'click-expand': 'Fes clic per ampliar'
@@ -788,7 +809,7 @@
                 'sectors-title': 'Distribución por Sectores',
                 'gallery-title': 'Galería de Proyectos',
                 'footer-text': 'Especialistas en Demoliciones y Transformaciones',
-                'footer-year': '© 2025 Albeirch. Todos los derechos reservados.',
+                'footer-year': '© 2025 Alberich. Todos los derechos reservados.',
                 'autoplay-start': 'Presentación',
                 'autoplay-stop': 'Detener',
                 'click-expand': 'Haz clic para ampliar'
@@ -856,17 +877,21 @@
             updateChart(lang);
         }
 
-        // Renderitzar sectors
+        // Renderitzar sectors amb colors
         function renderSectors(lang) {
             const sectorsList = document.getElementById('sectorsList');
             sectorsList.innerHTML = '';
             
             const sectors = sectorsData[lang];
-            Object.entries(sectors).forEach(([name, count]) => {
+            Object.entries(sectors).forEach(([name, count], index) => {
                 const item = document.createElement('div');
                 item.className = 'sector-item fade-in';
+                item.style.borderLeft = `4px solid ${sectorColors[index]}`;
                 item.innerHTML = `
-                    <span class="sector-name">${name}</span>
+                    <span class="sector-name">
+                        <span class="sector-color" style="background-color: ${sectorColors[index]}"></span>
+                        ${name}
+                    </span>
                     <span class="sector-count">${count}</span>
                 `;
                 sectorsList.appendChild(item);
@@ -891,21 +916,11 @@
                     labels: labels,
                     datasets: [{
                         data: data,
-                        backgroundColor: [
-                            '#253669',
-                            '#f2b258',
-                            '#4a6fa5',
-                            '#d4a574',
-                            '#2a4a7c',
-                            '#f5c88a',
-                            '#3d5a8c',
-                            '#e8b86b',
-                            '#1f3a5c',
-                            '#f0a840',
-                            '#5a7ab8'
-                        ],
+                        backgroundColor: sectorColors,
                         borderColor: '#ffffff',
-                        borderWidth: 3
+                        borderWidth: 3,
+                        hoverBorderWidth: 4,
+                        hoverOffset: 10
                     }]
                 },
                 options: {
@@ -920,7 +935,23 @@
                                     weight: 'bold'
                                 },
                                 color: '#253669',
-                                padding: 15
+                                padding: 15,
+                                usePointStyle: true,
+                                pointStyle: 'rectRounded'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(37, 54, 105, 0.9)',
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
+                            padding: 12,
+                            cornerRadius: 8,
+                            callbacks: {
+                                label: function(context) {
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percentage = ((context.raw / total) * 100).toFixed(1);
+                                    return ` ${context.raw} projectes (${percentage}%)`;
+                                }
                             }
                         }
                     }
